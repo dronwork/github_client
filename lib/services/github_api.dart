@@ -11,3 +11,7 @@ getRepository(String fullName) async {
 getContributors(String fullName) async {
   return await http.get("https://api.github.com/repos/$fullName/contributors");
 }
+
+getCommits(String fullName) async {
+  return await http.get("https://api.github.com/repos/$fullName/commits");
+}

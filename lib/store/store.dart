@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import 'models/app_state.dart';
 import 'reducers/app_state_reducer.dart';
+import 'middlewares/commits_middleware.dart';
 import 'middlewares/github_middleware.dart';
 
 final Store<AppState> store = Store<AppState>(
@@ -9,5 +10,6 @@ final Store<AppState> store = Store<AppState>(
   initialState: AppState.initial(),
   middleware: [
     githubMiddleware,
+    commitsMiddleware,
   ].toList(),
 );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class TextIcon extends StatelessWidget {
+class TextIconWidget extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const TextIcon({Key key, @required this.text, @required this.icon})
+  const TextIconWidget({Key key, @required this.text, @required this.icon})
       : super(key: key);
 
   @override
