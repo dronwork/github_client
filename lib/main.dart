@@ -4,7 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'store/store.dart';
-import 'store/actions/repositories_action.dart';
+import 'store/actions/github_action.dart';
 import 'store/models/app_state.dart';
 import 'routes.dart';
 
@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         home: StoreConnector<AppState, Store<AppState>>(
           onInit: (store) {
-            store.dispatch(RepositoriesOnInitActions());
+            store.dispatch(GitHubOnInitActions());
           },
           converter: (Store<AppState> store) => store,
           builder: (context, store) => HomeScreen(),

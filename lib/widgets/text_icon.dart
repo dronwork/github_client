@@ -13,8 +13,14 @@ class TextIcon extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Icon(icon),
-          Text(text),
+          Icon(
+            icon,
+            size: 20,
+          ),
+          Text(
+            text,
+            style: TextStyle(fontSize: 12),
+          ),
         ],
       ),
     );

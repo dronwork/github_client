@@ -15,7 +15,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, callback) => Scaffold(
         body: Center(
           child: ListView.builder(
-            itemCount: callback.state.repositories.length,
+            itemCount: callback.state.gitHub.length,
             itemBuilder: (context, index) {
               return Container(
                 padding: EdgeInsets.all(5),
@@ -35,13 +35,13 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "Name",
+                                "${callback.state.gitHub[index].name} (${callback.state.gitHub[index].fullName})",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                               Text(
-                                "Lang: Dart",
+                                "Lang: ${callback.state.gitHub[index].language}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
                                 ),
@@ -53,15 +53,8 @@ class HomeScreen extends StatelessWidget {
                       Divider(),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Text(
-                          'Lake Oeschinen lies at the foot of the Blüemlisalp in the Bernese '
-                          'Alps. Situated 1,578 meters above sea level, it is one of the '
-                          'larger Alpine Lakes. A gondola ride from Kandersteg, followed by a '
-                          'half-hour walk through pastures and pine forest, leads you to the '
-                          'lake, which warms to 20 degrees Celsius in the summer. Activities '
-                          'enjoyed here include rowing, and riding the summer toboggan run.',
-                          softWrap: true,
-                        ),
+                        child:
+                            Text("${callback.state.gitHub[index].description}"),
                       ),
                       Divider(),
                       Container(
@@ -70,16 +63,19 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             TextIcon(
-                              icon: CommunityMaterialIcons.star,
-                              text: "59 stars",
+                              icon: CommunityMaterialIcons.star_outline,
+                              text:
+                                  "${callback.state.gitHub[index].stargazersCount} stars",
                             ),
                             TextIcon(
                               icon: CommunityMaterialIcons.source_commit,
-                              text: "297 commits",
+                              text:
+                                  "${callback.state.gitHub[index].commits} commits",
                             ),
                             TextIcon(
                               icon: CommunityMaterialIcons.source_fork,
-                              text: "10 forks",
+                              text:
+                                  "${callback.state.gitHub[index].forksCount} forks",
                             ),
                           ],
                         ),
