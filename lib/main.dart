@@ -23,17 +23,10 @@ class App extends StatelessWidget {
             store.dispatch(RepositoriesOnInitActions());
           },
           converter: (Store<AppState> store) => store,
-          builder: (context, store) => _widget(store),
+          builder: (context, store) => HomeScreen(),
         ),
         routes: routes,
       ),
     );
-  }
-
-  Widget _widget(Store<AppState> store) {
-    if (store.state.repositories == null) {
-      return Text("null");
-    }
-    return HomeScreen();
   }
 }
