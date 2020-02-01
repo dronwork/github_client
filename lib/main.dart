@@ -6,7 +6,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'store/store.dart';
 import 'store/actions/github_action.dart';
 import 'store/models/app_state.dart';
-import 'routes.dart';
+import 'utils/routes.dart';
 
 void main() {
   runApp(App());

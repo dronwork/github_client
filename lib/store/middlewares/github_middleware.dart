@@ -58,14 +58,17 @@ void githubMiddleware(
           _contributors.isNotEmpty) {
         for (int i = 0; i < 5; i++) {
           _github.add(GitHub(
-              id: _repositories[i].id,
-              fullName: _repositories[i].fullName,
-              name: _repository[i].name,
-              description: _repository[i].description,
-              language: _repository[i].language,
-              forksCount: _repository[i].forksCount,
-              stargazersCount: _repository[i].stargazersCount,
-              commits: _contributors[i].contributions));
+            id: _repositories[i].id,
+            fullName: _repositories[i].fullName,
+            name: _repository[i].name,
+            description: _repository[i].description,
+            language: _repository[i].language,
+            forksCount: _repository[i].forksCount,
+            stargazersCount: _repository[i].stargazersCount,
+            commits: _contributors[i].contributions,
+            login: _repository[i].owner.login,
+            avatarUrl: _repository[i].owner.avatarUrl,
+          ));
         }
 
         store.dispatch(GitHubLoadedAction(_github));
