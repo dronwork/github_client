@@ -31,8 +31,11 @@ class DetailsScreen extends StatelessWidget {
               child: Stack(
                 alignment: AlignmentDirectional.bottomCenter,
                 children: <Widget>[
-                  Image.network(
-                    args.avatarUrl,
+                  Hero(
+                    tag: args.id,
+                    child: Image.network(
+                      args.avatarUrl,
+                    ),
                   ),
                   Container(
                       padding:

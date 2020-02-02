@@ -43,12 +43,15 @@ class HomePage extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 padding: EdgeInsets.all(5),
-                                child: CircleAvatar(
-                                  radius: 30,
-                                  backgroundColor: Colors.brown.shade800,
-                                  child: ClipOval(
-                                    child: Image.network(
-                                      viewModel.state.gitHub[index].avatarUrl,
+                                child: Hero(
+                                  tag: viewModel.state.gitHub[index].id,
+                                  child: CircleAvatar(
+                                    radius: 30,
+                                    backgroundColor: Colors.brown.shade800,
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        viewModel.state.gitHub[index].avatarUrl,
+                                      ),
                                     ),
                                   ),
                                 ),

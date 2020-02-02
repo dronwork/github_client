@@ -20,9 +20,18 @@ Info Screen:
  - get last commits (and info)
  - get avatar
 
- #3
+#7 (Done!)
+#8 (Done!)
+
+#3
 
 Change github_middleware
 
 Pull-to-refresh in list
+
+#4
+
+Change github_middleware
+
+Infinite list
  
