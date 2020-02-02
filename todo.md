@@ -12,11 +12,17 @@ API
 Home Screen:
  - Add list repos
 
-#2
+#2 (Done!)
 
 new middleware + new api
 
 Info Screen:
  - get last commits (and info)
  - get avatar
+
+ #3
+
+Change github_middleware
+
+Pull-to-refresh in list
  

@@ -13,8 +13,7 @@ void commitsMiddleware(
   if (action is CommitsOnInitActions) {
     if (store.state.commits.isEmpty) {
       store.dispatch(CommitsOnLoadAction());
-      // TODO get gitHub id
-      var _getCommits = await getCommits("mit-73/mwwm_flutter");
+      var _getCommits = await getCommits(action.fullName);
       if (_getCommits.statusCode == 200) {
         List list = convert.jsonDecode(_getCommits.body);
 
@@ -27,6 +26,10 @@ void commitsMiddleware(
         store.dispatch(CommitsFailedAction());
       }
     }
+  }
+
+  if (action is CommitsOnDisposeActions) {
+    store.state.commits = [];
   }
 
   next(action);

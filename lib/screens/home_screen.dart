@@ -1,12 +1,12 @@
-import 'package:community_material_icon/community_material_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:github_client/utils/routes_path.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:community_material_icon/community_material_icon.dart';
 
 import '../store/models/app_state.dart';
 import '../widgets/text_icon_widget.dart';
 import '../widgets/loading_widget.dart';
+import '../utils/routes_path.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -21,8 +21,17 @@ class HomeScreen extends StatelessWidget {
               itemCount: callback.state.gitHub.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  onTap: () => Navigator.pushNamed(context, RoutesPach.details,
-                      arguments: index),
+                  // TODO: Bad practice, we need to change navigation to redux. When there's time...
+                  onTap: () => Navigator.pushNamed(
+                    context,
+                    RoutesPach.details,
+                    arguments: {
+                      "avatarUrl": callback.state.gitHub[index].avatarUrl,
+                      "name": callback.state.gitHub[index].name,
+                      "fullName": callback.state.gitHub[index].fullName,
+                      "login": callback.state.gitHub[index].login
+                    },
+                  ),
                   child: Container(
                     padding: EdgeInsets.all(5),
                     child: Card(

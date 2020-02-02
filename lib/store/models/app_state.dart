@@ -7,7 +7,7 @@ import 'github.dart';
 class AppState {
   final bool isLoading;
   final List<GitHub> gitHub;
-  final List<Commits> commits;
+  List<Commits> commits;
 
   AppState({this.isLoading = false, this.gitHub, this.commits});
 

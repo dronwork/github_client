@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 class Commits {
   final Commit commit;
 
@@ -48,8 +50,5 @@ class Author {
         'date': this.date,
       };
 
-  String get toDate {
-    var _date = DateTime.parse(date);
-    return "${_date.day}.${_date.month}.${_date.year}";
-  }
+  String get dateAtFormatted => DateFormat.yMMMd().format(DateTime.parse(date));
 }
