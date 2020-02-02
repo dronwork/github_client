@@ -2,25 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import '../store/actions/commits_action.dart';
-import '../store/models/app_state.dart';
+import '../actions/routes_action.dart';
+import '../actions/commits_action.dart';
+import '../models/app_state.dart';
+import '../models/github.dart';
 import '../widgets/loading_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> args = ModalRoute.of(context).settings.arguments;
+    final GitHub args = ModalRoute.of(context).settings.arguments;
 
     return StoreConnector<AppState, Store<AppState>>(
       onInit: (store) {
-        store.dispatch(CommitsOnInitActions(args["fullName"]));
+        store.dispatch(CommitsOnInitActions(args.fullName));
       },
       onDispose: (store) {
         // TODO m.b. save commits to db
+        // store.dispatch(NavigatePopAction());
         store.dispatch(CommitsOnDisposeActions());
       },
       converter: (Store<AppState> store) => store,
-      builder: (context, callback) => Scaffold(
+      builder: (context, viewModel) => Scaffold(
         // TODO use sliverappbar
         body: Column(
           children: <Widget>[
@@ -29,7 +32,7 @@ class DetailsScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomCenter,
                 children: <Widget>[
                   Image.network(
-                    args["avatarUrl"],
+                    args.avatarUrl,
                   ),
                   Container(
                       padding:
@@ -41,7 +44,7 @@ class DetailsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Text(
-                            "${args["name"]}",
+                            "${args.name}",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -49,7 +52,7 @@ class DetailsScreen extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            "${args["login"]}",
+                            "${args.login}",
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -63,9 +66,9 @@ class DetailsScreen extends StatelessWidget {
             ),
             Expanded(
               child: LoadingWidget(
-                isLoading: callback.state.isLoading,
+                isLoading: viewModel.state.isLoading,
                 child: ListView.builder(
-                  itemCount: callback.state.commits.length,
+                  itemCount: viewModel.state.commits.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 5,
@@ -75,10 +78,10 @@ class DetailsScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                                "${callback.state.commits[index].commit.message}"),
+                                "${viewModel.state.commits[index].commit.message}"),
                             Divider(),
                             Text(
-                              "${callback.state.commits[index].commit.author.name} (${callback.state.commits[index].commit.author.email}) on ${callback.state.commits[index].commit.author.dateAtFormatted}",
+                              "${viewModel.state.commits[index].commit.author.name} (${viewModel.state.commits[index].commit.author.email}) on ${viewModel.state.commits[index].commit.author.dateAtFormatted}",
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[800],

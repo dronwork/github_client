@@ -5,7 +5,7 @@ import 'package:redux/redux.dart';
 import '../models/app_state.dart';
 import '../models/commits.dart';
 import '../actions/commits_action.dart';
-import '../../services/github_api.dart';
+import '../services/github_api.dart';
 
 void commitsMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {

@@ -3,34 +3,33 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
-import '../store/models/app_state.dart';
+import '../actions/github_action.dart';
+import '../actions/routes_action.dart';
+import '../models/app_state.dart';
 import '../widgets/text_icon_widget.dart';
 import '../widgets/loading_widget.dart';
-import '../utils/routes_path.dart';
+import '../models/routes.dart';
+import '../screens/main_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<AppState, Store<AppState>>(
-      converter: (Store<AppState> store) => store,
-      builder: (context, callback) => LoadingWidget(
-        isLoading: callback.state.isLoading,
-        child: Scaffold(
+    return StoreConnector<AppState, _ViewModel>(
+      onInit: (store) {
+        store.dispatch(GitHubOnInitActions());
+      },
+      converter: (Store<AppState> store) => _ViewModel.fromStore(store),
+      builder: (context, viewModel) => LoadingWidget(
+        isLoading: viewModel.state.isLoading,
+        child: MainScreen(
           body: Center(
             child: ListView.builder(
-              itemCount: callback.state.gitHub.length,
+              itemCount: viewModel.state.gitHub.length,
               itemBuilder: (context, index) {
                 return InkWell(
-                  // TODO: Bad practice, we need to change navigation to redux. When there's time...
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    RoutesPach.details,
-                    arguments: {
-                      "avatarUrl": callback.state.gitHub[index].avatarUrl,
-                      "name": callback.state.gitHub[index].name,
-                      "fullName": callback.state.gitHub[index].fullName,
-                      "login": callback.state.gitHub[index].login
-                    },
+                  onTap: () => viewModel.navigate(
+                    Routes.details,
+                    arguments: viewModel.state.gitHub[index],
                   ),
                   child: Container(
                     padding: EdgeInsets.all(5),
@@ -49,7 +48,7 @@ class HomeScreen extends StatelessWidget {
                                   backgroundColor: Colors.brown.shade800,
                                   child: ClipOval(
                                     child: Image.network(
-                                      callback.state.gitHub[index].avatarUrl,
+                                      viewModel.state.gitHub[index].avatarUrl,
                                     ),
                                   ),
                                 ),
@@ -60,19 +59,19 @@ class HomeScreen extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      "${callback.state.gitHub[index].name}",
+                                      "${viewModel.state.gitHub[index].name}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                     Text(
-                                      "Author: ${callback.state.gitHub[index].login}",
+                                      "Author: ${viewModel.state.gitHub[index].login}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w300,
                                       ),
                                     ),
                                     Text(
-                                      "Lang: ${callback.state.gitHub[index].language}",
+                                      "Lang: ${viewModel.state.gitHub[index].language}",
                                       style: TextStyle(
                                         fontWeight: FontWeight.w300,
                                       ),
@@ -86,7 +85,7 @@ class HomeScreen extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 10),
                             child: Text(
-                                "${callback.state.gitHub[index].description}"),
+                                "${viewModel.state.gitHub[index].description}"),
                           ),
                           Divider(),
                           Container(
@@ -97,17 +96,17 @@ class HomeScreen extends StatelessWidget {
                                 TextIconWidget(
                                   icon: CommunityMaterialIcons.star_outline,
                                   text:
-                                      "${callback.state.gitHub[index].stargazersCount} stars",
+                                      "${viewModel.state.gitHub[index].stargazersCount} stars",
                                 ),
                                 TextIconWidget(
                                   icon: CommunityMaterialIcons.source_commit,
                                   text:
-                                      "${callback.state.gitHub[index].commits} commits",
+                                      "${viewModel.state.gitHub[index].commits} commits",
                                 ),
                                 TextIconWidget(
                                   icon: CommunityMaterialIcons.source_fork,
                                   text:
-                                      "${callback.state.gitHub[index].forksCount} forks",
+                                      "${viewModel.state.gitHub[index].forksCount} forks",
                                 ),
                               ],
                             ),
@@ -121,6 +120,28 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _ViewModel {
+  final List<String> route;
+  final Function(String, {Object arguments}) navigate;
+  final AppState state;
+
+  _ViewModel({
+    @required this.state,
+    @required this.route,
+    @required this.navigate,
+  });
+
+  static _ViewModel fromStore(Store<AppState> store) {
+    return _ViewModel(
+      state: store.state,
+      route: store.state.route,
+      navigate: (routeName, {arguments}) => store.dispatch(
+        NavigatePushAction(routeName, arguments: arguments),
       ),
     );
   }

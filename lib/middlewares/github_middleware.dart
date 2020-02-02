@@ -8,7 +8,7 @@ import '../models/repository.dart';
 import '../models/contributors.dart';
 import '../models/github.dart';
 import '../actions/github_action.dart';
-import '../../services/github_api.dart';
+import '../services/github_api.dart';
 
 void githubMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {
