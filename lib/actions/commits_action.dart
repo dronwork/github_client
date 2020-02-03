@@ -13,6 +13,4 @@ class CommitsLoadedAction {
   CommitsLoadedAction(this.commits);
 }
 
-class CommitsFailedAction {}
-
 class CommitsOnDisposeActions {}

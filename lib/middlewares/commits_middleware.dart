@@ -1,29 +1,36 @@
 import 'dart:convert' as convert;
 
 import 'package:redux/redux.dart';
+import 'package:http/http.dart';
 
+import '../actions/commits_action.dart';
+import '../actions/error_action.dart';
+import '../services/github_api.dart';
 import '../models/app_state.dart';
 import '../models/commits.dart';
-import '../actions/commits_action.dart';
-import '../services/github_api.dart';
 
 void commitsMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {
-  List<Commits> _commits = new List<Commits>();
   if (action is CommitsOnInitActions) {
     if (store.state.commits.isEmpty) {
       store.dispatch(CommitsOnLoadAction());
-      var _getCommits = await getCommits(action.fullName);
-      if (_getCommits.statusCode == 200) {
-        List list = convert.jsonDecode(_getCommits.body);
 
-        for (int i = 0; i < 10; i++) {
-          _commits.add(Commits.fromJson(list[i]));
+      List<Commits> commits = new List<Commits>();
+
+      Response commitsResponse = await getCommits(action.fullName);
+      if (commitsResponse.statusCode == 200) {
+        List list = convert.jsonDecode(commitsResponse.body);
+
+        for (int i = 0; i < commits.length; i++) {
+          if (i < 10) {
+            commits.add(Commits.fromJson(list[i]));
+          }
         }
 
-        store.dispatch(CommitsLoadedAction(_commits));
+        store.dispatch(CommitsLoadedAction(commits));
       } else {
-        store.dispatch(CommitsFailedAction());
+        store.dispatch(ErrorOccurredAction(throw Exception(
+            'Error getting repositories data, http code: ${commitsResponse.statusCode}.')));
       }
     }
   }

@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'pages/favorite_page.dart';
-import 'screens/details_screen.dart';
-import 'pages/home_page.dart';
 import 'models/routes.dart';
 import 'utils/consts.dart';
 import 'utils/material_routes.dart';
 import 'widgets/route_aware_widget.dart';
+import 'view/view.dart';
 
 class App extends StatelessWidget {
   @override
@@ -21,13 +19,13 @@ class App extends StatelessWidget {
   MaterialPageRoute _routes(RouteSettings settings) {
     switch (settings.name) {
       case Routes.home:
-        return MaterialRoute(HomePage(), settings: settings);
+        return MaterialRoute(HomeContainer(), settings: settings);
       case Routes.favorite:
         return MaterialRoute(FavoritePage(), settings: settings);
       case Routes.details:
         return MaterialRoute(DetailsScreen(), settings: settings);
       default:
-        return MaterialRoute(HomePage(), settings: settings);
+        return MaterialRoute(HomeContainer(), settings: settings);
     }
   }
 }

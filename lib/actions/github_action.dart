@@ -1,14 +1,22 @@
+import 'package:flutter/widgets.dart';
+
 import '../models/github.dart';
 
-class GitHubOnInitActions {}
+class GitHubOnInitActions {
+  final int pageNumber;
+  final int itemsPerPage;
+  final bool updateDate;
+
+  GitHubOnInitActions({
+    @required this.pageNumber,
+    @required this.itemsPerPage,
+    @required this.updateDate,
+  });
+}
 
 class GitHubOnLoadAction {}
 
 class GitHubLoadedAction {
   final List<GitHub> gitHub;
-  GitHubLoadedAction(
-    this.gitHub,
-  );
+  GitHubLoadedAction(this.gitHub);
 }
-
-class GitHubFailedAction {}

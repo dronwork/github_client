@@ -20,18 +20,28 @@ Info Screen:
  - get last commits (and info)
  - get avatar
 
-#7 (Done!)
-#8 (Done!)
-
-#3
+#3 (Done!)
 
 Change github_middleware
 
 Pull-to-refresh in list
 
-#4
+#4 (Done!)
 
 Change github_middleware
 
 Infinite list
- 
+
+#5
+
+Second screen from the list
+
+#6
+
+new middleware for db
+
+db (save, load, delete) at Second screen
+
+#7 (Done!)
+
+#8 (Done!)

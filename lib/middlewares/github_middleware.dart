@@ -1,83 +1,108 @@
 import 'dart:convert' as convert;
 
 import 'package:redux/redux.dart';
+import 'package:http/http.dart';
 
+import '../actions/error_action.dart';
+import '../actions/github_action.dart';
+import '../services/github_api.dart';
 import '../models/app_state.dart';
 import '../models/repositories.dart';
 import '../models/repository.dart';
 import '../models/contributors.dart';
 import '../models/github.dart';
-import '../actions/github_action.dart';
-import '../services/github_api.dart';
 
-void githubMiddleware(
-    Store<AppState> store, action, NextDispatcher next) async {
+List<Repositories> repositories = new List<Repositories>();
+List<Repository> repository = new List<Repository>();
+List<Contributors> contributors = new List<Contributors>();
+
+void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is GitHubOnInitActions) {
-    if (store.state.gitHub.isEmpty) {
-      store.dispatch(GitHubOnLoadAction());
-      List<Repositories> repositories = new List<Repositories>();
-      List<Repository> repository = new List<Repository>();
-      List<Contributors> contributors = new List<Contributors>();
-      List<GitHub> github = new List<GitHub>();
+    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.updateDate)
+        .then((itemsPage) {
+      store.dispatch(GitHubLoadedAction(itemsPage));
+    }).catchError((exception, stacktrace) {
+      store.dispatch(ErrorOccurredAction(exception));
+    });
+  }
 
-      // Get a list of all repositories
-      var _getRepositories = await getRepositories();
-      if (_getRepositories.statusCode == 200) {
-        List list = convert.jsonDecode(_getRepositories.body);
-        repositories =
-            list.map((model) => Repositories.fromJson(model)).toList();
+  next(action);
+}
+
+Future<List<GitHub>> _loadGitHubData(
+  int page,
+  int perPage,
+  bool updateDate,
+) async {
+  List<GitHub> github = new List<GitHub>();
+
+  // Call at data update (Pull-to-refresh)
+  if (updateDate) {
+    // Get a list of all repositories
+    Response repositoriesResponse = await getRepositories();
+    if (repositoriesResponse.statusCode == 200) {
+      List list = convert.jsonDecode(repositoriesResponse.body);
+      repositories = list.map((model) => Repositories.fromJson(model)).toList();
+    } else {
+      throw Exception(
+          'Error getting repositories data, http code: ${repositoriesResponse.statusCode}.');
+    }
+  }
+
+  // Ranks for the loop
+  if (page != 0) {
+    page = page * perPage;
+    perPage = perPage + page;
+  }
+
+  for (int i = page; i < perPage; i++) {
+    if (i < repositories.length) {
+      // Get information about the repository.
+      Response repositoryResponse =
+          await getRepository(repositories[i].fullName);
+      if (repositoryResponse.statusCode == 200) {
+        repository.add(
+            Repository.fromJson(convert.jsonDecode(repositoryResponse.body)));
       } else {
-        store.dispatch(GitHubFailedAction());
+        throw Exception(
+            'Error getting repository data, http code: ${repositoryResponse.statusCode}.');
       }
 
-      for (int i = 0; i < 5; i++) {
-        // Get information about the repository.
-        var _getRepository = await getRepository(repositories[i].fullName);
-        if (_getRepository.statusCode == 200) {
-          repository.add(
-              Repository.fromJson(convert.jsonDecode(_getRepository.body)));
-        } else {
-          store.dispatch(GitHubFailedAction());
-        }
+      // Get the number of commits
+      Response contributorsResponse =
+          await getContributors(repositories[i].fullName);
+      if (contributorsResponse.statusCode == 200) {
+        int commits = 0;
+        List list = convert.jsonDecode(contributorsResponse.body);
 
-        // Get the number of commits
-        var _getContributors = await getContributors(repositories[i].fullName);
-        if (_getContributors.statusCode == 200) {
-          int commits = 0;
-          List list = convert.jsonDecode(_getContributors.body);
+        list.forEach((v) => commits += Contributors.fromJson(v).contributions);
 
-          list.forEach(
-              (v) => commits += Contributors.fromJson(v).contributions);
+        contributors.add(Contributors(contributions: commits));
+      } else {
+        throw Exception(
+            'Error getting contributors data, http code: ${contributorsResponse.statusCode}.');
+      }
 
-          contributors.add(Contributors(contributions: commits));
-        } else {
-          store.dispatch(GitHubFailedAction());
-        }
-
-        // Adding all information to the Github model
-        if (repositories[i].fullName.isNotEmpty &&
-            repository[i].name.isNotEmpty &&
-            contributors[i].contributions != 0) {
-          github.add(GitHub(
-            id: repositories[i].id,
-            fullName: repositories[i].fullName,
-            name: repository[i].name,
-            description: repository[i].description,
-            language: repository[i].language,
-            forksCount: repository[i].forksCount,
-            stargazersCount: repository[i].stargazersCount,
-            login: repository[i].owner.login,
-            avatarUrl: repository[i].owner.avatarUrl,
-            commits: contributors[i].contributions,
-          ));
-
-          store.dispatch(GitHubLoadedAction(github));
-        } else {
-          store.dispatch(GitHubFailedAction());
-        }
+      // Adding all information to the GitHub model
+      if (repositories[i].fullName.isNotEmpty &&
+          repository[i].name.isNotEmpty) {
+        github.add(GitHub(
+          id: repositories[i].id,
+          fullName: repositories[i].fullName,
+          name: repository[i].name,
+          description: repository[i].description,
+          language: repository[i].language,
+          forksCount: repository[i].forksCount,
+          stargazersCount: repository[i].stargazersCount,
+          login: repository[i].owner.login,
+          avatarUrl: repository[i].owner.avatarUrl,
+          commits: contributors[i].contributions,
+        ));
+      } else {
+        throw Exception('Error add data to GitHub model.');
       }
     }
   }
 
-  next(action);
+  return github;
 }

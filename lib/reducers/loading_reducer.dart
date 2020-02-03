@@ -2,6 +2,7 @@ import 'package:redux/redux.dart';
 
 import '../actions/github_action.dart';
 import '../actions/commits_action.dart';
+import '../actions/error_action.dart';
 
 final loadingReducer = combineReducers<bool>([
   /**
@@ -13,9 +14,8 @@ final loadingReducer = combineReducers<bool>([
    * Loaded @isloading false
   */
   TypedReducer<bool, GitHubLoadedAction>(_loaded),
-  TypedReducer<bool, GitHubFailedAction>(_loaded),
   TypedReducer<bool, CommitsLoadedAction>(_loaded),
-  TypedReducer<bool, CommitsFailedAction>(_loaded),
+  TypedReducer<bool, ErrorOccurredAction>(_loaded),
 ]);
 
 bool _loading(bool state, action) {
