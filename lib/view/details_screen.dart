@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -9,6 +10,7 @@ import '../models/github.dart';
 import '../widgets/loading_widget.dart';
 import '../widgets/error_notifier_widget.dart';
 
+// TODO fix load info
 class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -35,8 +37,11 @@ class DetailsScreen extends StatelessWidget {
                   children: <Widget>[
                     Hero(
                       tag: args.id,
-                      child: Image.network(
-                        args.avatarUrl,
+                      child: CachedNetworkImage(
+                        imageUrl: args.avatarUrl,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                     ),
                     Container(

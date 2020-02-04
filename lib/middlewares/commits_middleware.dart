@@ -11,26 +11,22 @@ import '../models/commits.dart';
 
 void commitsMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {
+  List<Commits> commits = new List<Commits>();
   if (action is CommitsOnInitActions) {
     if (store.state.commits.isEmpty) {
       store.dispatch(CommitsOnLoadAction());
-
-      List<Commits> commits = new List<Commits>();
-
       Response commitsResponse = await getCommits(action.fullName);
       if (commitsResponse.statusCode == 200) {
         List list = convert.jsonDecode(commitsResponse.body);
 
-        for (int i = 0; i < commits.length; i++) {
-          if (i < 10) {
-            commits.add(Commits.fromJson(list[i]));
-          }
+        for (int i = 0; i < list.length; i++) {
+          if (i < 10) commits.add(Commits.fromJson(list[i]));
         }
 
         store.dispatch(CommitsLoadedAction(commits));
       } else {
         store.dispatch(ErrorOccurredAction(throw Exception(
-            'Error getting repositories data, http code: ${commitsResponse.statusCode}.')));
+            'Error getting commits data, http code: ${commitsResponse.statusCode}.')));
       }
     }
   }

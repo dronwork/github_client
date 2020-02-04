@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
 
 import 'package:flutter/material.dart';
@@ -38,7 +39,13 @@ class GitHubItemWidget extends StatelessWidget {
                         radius: 30,
                         backgroundColor: Colors.brown.shade800,
                         child: ClipOval(
-                          child: Image.network(gitHub.avatarUrl),
+                          child: CachedNetworkImage(
+                            imageUrl: gitHub.avatarUrl,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
+                          ),
                         ),
                       ),
                     ),
