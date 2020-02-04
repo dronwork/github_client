@@ -15,6 +15,8 @@ class HomePage extends StatefulWidget {
   final List<GitHub> gitHub;
   final Function refresh;
   final Function loadNextPage;
+  final Function addToDb;
+  final Function deleteFromDb;
 
   const HomePage({
     Key key,
@@ -26,6 +28,8 @@ class HomePage extends StatefulWidget {
     @required this.gitHub,
     @required this.refresh,
     @required this.loadNextPage,
+    @required this.addToDb,
+    @required this.deleteFromDb,
   }) : super(key: key);
 
   @override
@@ -64,11 +68,12 @@ class _HomePageState extends State<HomePage> {
                 ? widget.gitHub.length + 1
                 : widget.gitHub.length,
             itemBuilder: (context, index) {
-              return (index < widget.gitHub.length)
+              return (widget.gitHub.length != 0 && index < widget.gitHub.length)
                   ? GitHubItemWidget(
-                      // TODO add onTap
                       onTap: widget.navigate,
                       gitHub: widget.gitHub[index],
+                      addToDb: widget.addToDb,
+                      deleteFromDb: widget.deleteFromDb,
                     )
                   : Center(child: CircularProgressIndicator());
             },

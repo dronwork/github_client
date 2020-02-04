@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 import 'commits.dart';
 import 'github.dart';
 import 'routes.dart';
@@ -16,6 +14,7 @@ class AppState {
   final bool isDataLoading;
   final bool isNextPageAvailable;
   static const int itemsPerPage = 5;
+  List<GitHub> dbGitHub;
 
   AppState({
     this.isLoading = false,
@@ -25,6 +24,7 @@ class AppState {
     this.commits,
     this.isDataLoading,
     this.isNextPageAvailable,
+    this.dbGitHub,
   });
 
   factory AppState.initial() => AppState(
@@ -34,6 +34,7 @@ class AppState {
         commits: [],
         isDataLoading: false,
         isNextPageAvailable: false,
+        dbGitHub: [],
       );
   factory AppState.loaded() => AppState(
         isLoading: true,

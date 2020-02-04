@@ -21,7 +21,7 @@ class App extends StatelessWidget {
       case Routes.home:
         return MaterialRoute(HomeContainer(), settings: settings);
       case Routes.favorite:
-        return MaterialRoute(FavoritePage(), settings: settings);
+        return MaterialRoute(FavoriteContainer(), settings: settings);
       case Routes.details:
         return MaterialRoute(DetailsScreen(), settings: settings);
       default:

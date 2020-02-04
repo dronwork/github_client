@@ -18,7 +18,8 @@ List<Contributors> contributors = new List<Contributors>();
 
 void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is GitHubOnInitActions) {
-    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.updateDate)
+    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.updateDate,
+            since: action.since)
         .then((itemsPage) {
       store.dispatch(GitHubLoadedAction(itemsPage));
     }).catchError((exception, stacktrace) {
@@ -29,11 +30,8 @@ void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-Future<List<GitHub>> _loadGitHubData(
-  int page,
-  int perPage,
-  bool updateDate,
-) async {
+Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
+    {int since = 1}) async {
   List<GitHub> github = new List<GitHub>();
 
   // Call at data update (Pull-to-refresh)

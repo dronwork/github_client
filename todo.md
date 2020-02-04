@@ -32,11 +32,11 @@ Change github_middleware
 
 Infinite list
 
-#5
+#5 (Done!)
 
 Second screen from the list
 
-#6
+#6 (Done!)
 
 new middleware for db
 

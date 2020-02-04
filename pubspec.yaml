@@ -14,24 +14,31 @@ description: A new Flutter project.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
-  community_material_icon: ^3.5.95
-  
-  intl: ^0.16.1
-  http: ^0.12.0+4
-  cached_network_image: ^2.0.0
-
+  # Redux
   redux: ^4.0.0
   flutter_redux: ^0.6.0
+  # Hive DB
+  hive: ^1.3.0
+  hive_flutter: ^0.3.0+1
+  # Utils
+  http: ^0.12.0+4
+  cached_network_image: ^2.0.0
+  intl: ^0.16.1
+  # Other
+  community_material_icon: ^3.5.95
+  flutter_slidable: ^0.5.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^1.7.3
+  hive_generator: ^0.7.0
+
 
 
 # For information on the generic Dart part of this file, see the

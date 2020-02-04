@@ -6,11 +6,13 @@ class GitHubOnInitActions {
   final int pageNumber;
   final int itemsPerPage;
   final bool updateDate;
+  final int since;
 
   GitHubOnInitActions({
     @required this.pageNumber,
     @required this.itemsPerPage,
     @required this.updateDate,
+    this.since,
   });
 }
 
