@@ -19,12 +19,10 @@ class DetailsScreen extends StatelessWidget {
         store.dispatch(CommitsOnInitActions(args.fullName));
       },
       onDispose: (store) {
-        // TODO m.b. save commits to db
         store.dispatch(CommitsOnDisposeActions());
       },
       converter: (Store<AppState> store) => store,
       builder: (context, viewModel) => Scaffold(
-        // TODO use sliverappbar
         body: ErrorNotifierWidget(
           child: NestedScrollView(
             headerSliverBuilder:
