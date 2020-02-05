@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../actions/error_action.dart';
-import '../models/app_state.dart';
+import '../../actions/error_action.dart';
+import '../../models/app_state.dart';
 
 class ErrorNotifierWidget extends StatelessWidget {
   ErrorNotifierWidget({

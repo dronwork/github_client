@@ -17,7 +17,7 @@ final loadingReducer = combineReducers<bool>([
   */
   TypedReducer<bool, GitHubLoadedAction>(_loaded),
   TypedReducer<bool, CommitsLoadedAction>(_loaded),
-  TypedReducer<bool, DbLoadedActions>(_loaded),
+  TypedReducer<bool, DbLoadedAction>(_loaded),
   TypedReducer<bool, ErrorOccurredAction>(_loaded),
 ]);
 

@@ -14,8 +14,14 @@ class DbOnRemoveAction<Model> {
   DbOnRemoveAction(this.model);
 }
 
-class DbLoadedActions<Model> {
+class DbLoadedAction<Model> {
   final List<Model> model;
 
-  DbLoadedActions(this.model);
+  DbLoadedAction(this.model);
+}
+
+class DbIsInBoxAction {
+  final bool isInBox;
+
+  DbIsInBoxAction(this.isInBox);
 }

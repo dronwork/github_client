@@ -32,7 +32,7 @@ void commitsMiddleware(
   }
 
   if (action is CommitsOnDisposeActions) {
-    store.state.commits = [];
+    store.dispatch(CommitsLoadedAction([]));
   }
 
   next(action);

@@ -32,7 +32,7 @@ void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
 
 Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
     {int since = 1}) async {
-  List<GitHub> github = new List<GitHub>();
+  List<GitHub> gitHub = new List<GitHub>();
 
   // Call at data update (Pull-to-refresh)
   if (updateDate) {
@@ -84,7 +84,7 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
       // Adding all information to the GitHub model
       if (repositories[i].fullName.isNotEmpty &&
           repository[i].name.isNotEmpty) {
-        github.add(GitHub(
+        gitHub.add(GitHub(
           id: repositories[i].id,
           fullName: repositories[i].fullName,
           name: repository[i].name,
@@ -102,5 +102,5 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
     }
   }
 
-  return github;
+  return gitHub;
 }

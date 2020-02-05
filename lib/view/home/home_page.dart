@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/github_item_widget.dart';
-import '../../widgets/loading_widget.dart';
+import '../widgets/github_item_widget.dart';
+import '../widgets/loading_widget.dart';
 import '../../models/github.dart';
 import '../../view/main_screen.dart';
 import '../../utils/preloader.dart';
@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
   final Function loadNextPage;
   final Function addToDb;
   final Function deleteFromDb;
+  final bool isInBox;
 
   const HomePage({
     Key key,
@@ -30,6 +31,7 @@ class HomePage extends StatefulWidget {
     @required this.loadNextPage,
     @required this.addToDb,
     @required this.deleteFromDb,
+    @required this.isInBox,
   }) : super(key: key);
 
   @override
@@ -60,10 +62,9 @@ class _HomePageState extends State<HomePage> {
         onRefresh: _onRefresh,
         child: LoadingWidget(
           isLoading: (widget.isDataLoading && widget.gitHub.length == 0),
-          child: ListView.separated(
+          child: ListView.builder(
             controller: _scrollController,
             physics: AlwaysScrollableScrollPhysics(),
-            separatorBuilder: (BuildContext context, int index) => Divider(),
             itemCount: widget.isNextPageAvailable
                 ? widget.gitHub.length + 1
                 : widget.gitHub.length,
@@ -74,6 +75,7 @@ class _HomePageState extends State<HomePage> {
                       gitHub: widget.gitHub[index],
                       addToDb: widget.addToDb,
                       deleteFromDb: widget.deleteFromDb,
+                      isInBox: widget.isInBox,
                     )
                   : Center(child: CircularProgressIndicator());
             },

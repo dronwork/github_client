@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
-import '../actions/routes_action.dart';
-import '../models/app_state.dart';
-import '../models/routes.dart';
+import '../../actions/routes_action.dart';
+import '../../models/app_state.dart';
+import '../../models/routes.dart';
 
 class BottomNavBar extends StatelessWidget {
   Widget _addPadding(Widget child) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(vertical: 4),
         child: child,
       );
 

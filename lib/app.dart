@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'models/routes.dart';
 import 'utils/consts.dart';
-import 'utils/material_routes.dart';
-import 'widgets/route_aware_widget.dart';
+import 'view/widgets/material_routes.dart';
+import 'view/widgets/route_aware_widget.dart';
 import 'view/view.dart';
 
 class App extends StatelessWidget {

@@ -21,10 +21,11 @@ class FavoriteContainer extends StatelessWidget {
           isLoading: viewModel.store.state.isLoading,
           noError: viewModel.error,
           navigate: viewModel.navigate,
-          gitHub: viewModel.gitHub,
+          dbGitHub: viewModel.dbGitHub,
           refresh: viewModel.onRefresh,
           addToDb: viewModel.onAddToDb,
           deleteFromDb: viewModel.onDeleteFromDb,
+          isInBox: viewModel.store.state.isInBox,
         );
       },
     );
@@ -36,15 +37,14 @@ class _ViewModel {
   final bool error;
   final List<String> route;
   final Function(String, {Object arguments}) navigate;
-
-  final List<GitHub> gitHub;
+  final List<GitHub> dbGitHub;
 
   _ViewModel({
     @required this.store,
     @required this.error,
     @required this.route,
     @required this.navigate,
-    @required this.gitHub,
+    @required this.dbGitHub,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -52,10 +52,9 @@ class _ViewModel {
       store: store,
       error: store.state.error == null,
       route: store.state.route,
-      navigate: (routeName, {arguments}) => store.dispatch(
-        NavigatePushAction(routeName, arguments: arguments),
-      ),
-      gitHub: store.state.dbGitHub,
+      navigate: (routeName, {arguments}) =>
+          store.dispatch(NavigatePushAction(routeName, arguments: arguments)),
+      dbGitHub: store.state.dbGitHub,
     );
   }
 

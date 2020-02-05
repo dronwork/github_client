@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
-import '../models/app_state.dart';
-import '../actions/routes_action.dart';
+import '../../actions/routes_action.dart';
+import '../../models/app_state.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 

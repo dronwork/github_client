@@ -1,18 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:community_material_icon/community_material_icon.dart';
-
-import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'text_icon_widget.dart';
-import '../models/github.dart';
-import '../models/routes.dart';
+import '../../models/github.dart';
+import '../../models/routes.dart';
 
 class GitHubItemWidget extends StatelessWidget {
   final GitHub gitHub;
   final Function(String, {Object arguments}) onTap;
   final Function addToDb;
   final Function deleteFromDb;
+  final bool isInBox;
 
   const GitHubItemWidget({
     Key key,
@@ -20,6 +20,7 @@ class GitHubItemWidget extends StatelessWidget {
     @required this.onTap,
     @required this.addToDb,
     @required this.deleteFromDb,
+    @required this.isInBox,
   }) : super(key: key);
 
   @override
@@ -29,8 +30,7 @@ class GitHubItemWidget extends StatelessWidget {
       child: Slidable(
         actionPane: SlidableDrawerActionPane(),
         secondaryActions: <Widget>[
-          // TODO Fix it ...
-          (gitHub.isInBox && gitHub.key != null && gitHub.box != null)
+          (isInBox || gitHub.isInBox)
               ? IconSlideAction(
                   caption: 'Delete',
                   color: Colors.red,
@@ -52,7 +52,6 @@ class GitHubItemWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.all(5),
@@ -60,12 +59,12 @@ class GitHubItemWidget extends StatelessWidget {
                         tag: gitHub.id,
                         child: CircleAvatar(
                           radius: 30,
-                          backgroundColor: Colors.brown.shade800,
+                          backgroundColor: Colors.grey[200],
                           child: ClipOval(
                             child: CachedNetworkImage(
                               imageUrl: gitHub.avatarUrl,
                               placeholder: (context, url) =>
-                                  CircularProgressIndicator(),
+                                  Icon(Icons.person, color: Colors.grey[400]),
                               errorWidget: (context, url, error) =>
                                   Icon(Icons.error),
                             ),
@@ -101,9 +100,9 @@ class GitHubItemWidget extends StatelessWidget {
                     ),
                   ],
                 ),
-                Divider(),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Text("${gitHub.description}"),
                 ),
                 Divider(),

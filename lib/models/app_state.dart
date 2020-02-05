@@ -1,7 +1,10 @@
+import 'package:flutter/foundation.dart';
+
 import 'commits.dart';
 import 'github.dart';
 import 'routes.dart';
 
+@immutable
 class AppState {
   // App
   final bool isLoading;
@@ -9,12 +12,14 @@ class AppState {
   // Routes
   final List<String> route;
   // GitHub data
+  static const int itemsPerPage = 5;
   final List<GitHub> gitHub;
-  List<Commits> commits;
   final bool isDataLoading;
   final bool isNextPageAvailable;
-  static const int itemsPerPage = 5;
-  List<GitHub> dbGitHub;
+  final List<Commits> commits;
+  // Hive
+  final List<GitHub> dbGitHub;
+  final bool isInBox;
 
   AppState({
     this.isLoading = false,
@@ -25,17 +30,18 @@ class AppState {
     this.isDataLoading,
     this.isNextPageAvailable,
     this.dbGitHub,
+    this.isInBox,
   });
 
   factory AppState.initial() => AppState(
-        isLoading: false,
-        route: [Routes.home],
-        gitHub: [],
-        commits: [],
-        isDataLoading: false,
-        isNextPageAvailable: false,
-        dbGitHub: [],
-      );
+      isLoading: false,
+      route: [Routes.home],
+      gitHub: [],
+      commits: [],
+      isDataLoading: false,
+      isNextPageAvailable: false,
+      dbGitHub: [],
+      isInBox: false);
   factory AppState.loaded() => AppState(
         isLoading: true,
       );

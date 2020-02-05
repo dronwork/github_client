@@ -15,13 +15,12 @@ class HomeContainer extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromStore,
       onInit: (store) {
-        store.dispatch(
-          GitHubOnInitActions(
-              pageNumber: 0,
-              itemsPerPage: AppState.itemsPerPage,
-              updateDate: true),
-        );
+        store.dispatch(GitHubOnInitActions(
+            pageNumber: 0,
+            itemsPerPage: AppState.itemsPerPage,
+            updateDate: true));
       },
+      rebuildOnChange: true,
       builder: (context, viewModel) {
         return HomePage(
           isLoading: viewModel.store.state.isLoading,
@@ -34,6 +33,7 @@ class HomeContainer extends StatelessWidget {
           loadNextPage: viewModel.onLoadNextPage,
           addToDb: viewModel.onAddToDb,
           deleteFromDb: viewModel.onDeleteFromDb,
+          isInBox: viewModel.store.state.isInBox,
         );
       },
     );

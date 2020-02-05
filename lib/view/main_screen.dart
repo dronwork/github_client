@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_nav_bar.dart';
-import '../widgets/error_notifier_widget.dart';
+import '../view/widgets/bottom_nav_bar.dart';
+import '../view/widgets/error_notifier_widget.dart';
 
 class MainScreen extends StatelessWidget {
   final Widget child;
