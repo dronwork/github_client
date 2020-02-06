@@ -8,7 +8,6 @@ import '../../utils/preloader.dart';
 
 class HomePage extends StatefulWidget {
   final bool isLoading;
-  final bool noError;
   final Function(String, {Object arguments}) navigate;
   final bool isNextPageAvailable;
   final List<GitHub> gitHub;
@@ -21,7 +20,6 @@ class HomePage extends StatefulWidget {
   const HomePage({
     Key key,
     @required this.isLoading,
-    @required this.noError,
     @required this.navigate,
     @required this.isNextPageAvailable,
     @required this.gitHub,

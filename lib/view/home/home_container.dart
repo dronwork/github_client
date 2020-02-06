@@ -16,7 +16,7 @@ class HomeContainer extends StatelessWidget {
       converter: _ViewModel.fromStore,
       onInit: (store) {
         store.dispatch(
-          GitHubOnInitActions(
+          GitHubOnInitAction(
             isInitData: true,
             pageNumber: 0,
             itemsPerPage: AppState.itemsPerPage,
@@ -24,11 +24,9 @@ class HomeContainer extends StatelessWidget {
           ),
         );
       },
-      rebuildOnChange: true,
       builder: (context, viewModel) {
         return HomePage(
           isLoading: viewModel.isLoading,
-          noError: viewModel.error,
           navigate: viewModel.navigate,
           isNextPageAvailable: viewModel.isNextPageAvailable,
           gitHub: viewModel.gitHub,
@@ -47,7 +45,6 @@ class _ViewModel {
   final Store<AppState> store;
 
   final bool isLoading;
-  final bool error;
   final List<String> route;
   final Function(String, {Object arguments}) navigate;
 
@@ -58,7 +55,6 @@ class _ViewModel {
 
   _ViewModel({
     @required this.store,
-    @required this.error,
     @required this.route,
     @required this.navigate,
     @required this.gitHub,
@@ -70,7 +66,6 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       store: store,
-      error: store.state.error == null,
       route: store.state.route,
       navigate: (routeName, {arguments}) => store.dispatch(
         NavigatePushAction(routeName, arguments: arguments),
@@ -85,7 +80,7 @@ class _ViewModel {
   void onLoadNextPage() {
     if (!isLoading && isNextPageAvailable) {
       store.dispatch(
-        GitHubOnInitActions(
+        GitHubOnInitAction(
           pageNumber: store.state.gitHub.length ~/ AppState.itemsPerPage,
           itemsPerPage: AppState.itemsPerPage,
           isUpdateData: false,
@@ -96,7 +91,7 @@ class _ViewModel {
 
   void onRefresh() {
     store.dispatch(
-      GitHubOnInitActions(
+      GitHubOnInitAction(
         pageNumber: 0,
         itemsPerPage: AppState.itemsPerPage,
         isUpdateData: true,

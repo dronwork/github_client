@@ -2,14 +2,14 @@ import 'package:flutter/widgets.dart';
 
 import '../models/github.dart';
 
-class GitHubOnInitActions {
+class GitHubOnInitAction {
   final int pageNumber;
   final int itemsPerPage;
   final bool isUpdateData;
   final bool isInitData;
   final int since;
 
-  GitHubOnInitActions({
+  GitHubOnInitAction({
     @required this.pageNumber,
     @required this.itemsPerPage,
     @required this.isUpdateData,
