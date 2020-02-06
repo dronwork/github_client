@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       child: RefreshIndicator(
         onRefresh: _onRefresh,
         child: LoadingWidget(
-          isLoading: (widget.isDataLoading && widget.gitHub.length == 0),
+          isLoading: widget.isLoading && widget.gitHub.length == 0,
           child: ListView.builder(
             controller: _scrollController,
             physics: AlwaysScrollableScrollPhysics(),
@@ -69,15 +69,20 @@ class _HomePageState extends State<HomePage> {
                 ? widget.gitHub.length + 1
                 : widget.gitHub.length,
             itemBuilder: (context, index) {
-              return (widget.gitHub.length != 0 && index < widget.gitHub.length)
-                  ? GitHubItemWidget(
-                      onTap: widget.navigate,
-                      gitHub: widget.gitHub[index],
-                      addToDb: widget.addToDb,
-                      deleteFromDb: widget.deleteFromDb,
-                      isInBox: widget.isInBox,
-                    )
-                  : Center(child: CircularProgressIndicator());
+              if (index < widget.gitHub.length) {
+                return GitHubItemWidget(
+                  onTap: widget.navigate,
+                  gitHub: widget.gitHub[index],
+                  addToDb: widget.addToDb,
+                  deleteFromDb: widget.deleteFromDb,
+                  isInBox: widget.isInBox,
+                );
+              } else if (widget.gitHub.length != 0) {
+                return Center(child: CircularProgressIndicator());
+              } else if (widget.gitHub.length == 0 &&
+                  !(widget.isDataLoading || widget.isLoading)) {
+                return Center(child: Text("Null data"));
+              }
             },
           ),
         ),

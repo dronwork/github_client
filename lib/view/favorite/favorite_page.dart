@@ -40,6 +40,7 @@ class _HomePageState extends State<FavoritePage> {
         child: LoadingWidget(
           isLoading: widget.isLoading,
           child: ListView.builder(
+            shrinkWrap: true,
             itemCount: widget.dbGitHub.length,
             itemBuilder: (context, index) {
               return GitHubItemWidget(

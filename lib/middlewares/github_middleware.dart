@@ -18,6 +18,7 @@ List<Contributors> contributors = new List<Contributors>();
 
 void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is GitHubOnInitActions) {
+    store.dispatch(GitHubOnLoadAction());
     _loadGitHubData(action.pageNumber, action.itemsPerPage, action.updateDate,
             since: action.since)
         .then((itemsPage) {

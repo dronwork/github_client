@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 
 import '../utils/consts.dart';
 
-getRepositories({int since = 1}) async {
+getRepositories({int since = 0}) async {
   return await http.get("$url/repositories?since=$since");
 }
 

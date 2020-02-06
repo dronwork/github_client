@@ -31,6 +31,7 @@ void dbMiddleware(Store<AppState> store, action, NextDispatcher next) async {
 
   if (action is DbIsInBoxAction) {
     store.dispatch(DbIsInBoxAction(_listsEqual(store)));
+    store.dispatch(DbLoadedAction<GitHub>(gitHubBox.values.toList()));
   }
 
   next(action);
@@ -48,6 +49,7 @@ Future<Box<GitHub>> _gitHubBox() async {
 
 bool _listsEqual(Store<AppState> store) {
   var i = -1;
+  // TODO Debug
   return store.state.gitHub.every((v) {
     i++;
     return store.state.dbGitHub[i].id == v.id;

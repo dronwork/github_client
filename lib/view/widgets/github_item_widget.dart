@@ -86,12 +86,14 @@ class GitHubItemWidget extends StatelessWidget {
                           Text(
                             "Author: ${gitHub.login}",
                             style: TextStyle(
+                              fontSize: 12,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
                           Text(
                             "Lang: ${gitHub.language}",
                             style: TextStyle(
+                              fontSize: 12,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
@@ -101,8 +103,7 @@ class GitHubItemWidget extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                   child: Text("${gitHub.description}"),
                 ),
                 Divider(),

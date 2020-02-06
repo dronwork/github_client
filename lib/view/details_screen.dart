@@ -39,7 +39,7 @@ class DetailsScreen extends StatelessWidget {
                       FlexibleSpaceBar(
                         centerTitle: true,
                         title: Text(
-                          "${args.login}/${args.name}",
+                          "${args.login} / ${args.name}",
                         ),
                         background: Hero(
                           tag: args.id,
