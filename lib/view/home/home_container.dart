@@ -41,13 +41,16 @@ class HomeContainer extends StatelessWidget {
 
 class _ViewModel {
   final Store<AppState> store;
+
+  final bool isLoading;
   final bool error;
   final List<String> route;
   final Function(String, {Object arguments}) navigate;
 
   final List<GitHub> gitHub;
-  final bool isLoading;
   final bool isNextPageAvailable;
+
+  final bool isInBox;
 
   _ViewModel({
     @required this.store,
@@ -57,6 +60,7 @@ class _ViewModel {
     @required this.gitHub,
     @required this.isLoading,
     @required this.isNextPageAvailable,
+    @required this.isInBox,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -70,6 +74,7 @@ class _ViewModel {
       gitHub: store.state.gitHub,
       isLoading: store.state.isLoading,
       isNextPageAvailable: store.state.isNextPageAvailable,
+      isInBox: true,
     );
   }
 
@@ -77,7 +82,7 @@ class _ViewModel {
     if (!isLoading && isNextPageAvailable) {
       store.dispatch(
         GitHubOnInitActions(
-            pageNumber: gitHub.length ~/ AppState.itemsPerPage,
+            pageNumber: store.state.gitHub.length ~/ AppState.itemsPerPage,
             itemsPerPage: AppState.itemsPerPage,
             updateDate: false),
       );
