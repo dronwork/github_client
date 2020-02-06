@@ -12,8 +12,8 @@ List<GitHub> _githubLoaded(List<GitHub> gitHub, action) {
   if (action is GitHubLoadedAction) {
     return List.from(gitHub)..addAll(action.gitHub);
   } else if (action is GitHubOnInitActions &&
-      action.updateDate &&
-      !action.init) {
+      action.isUpdateData &&
+      !action.isInitData) {
     return List<GitHub>();
   } else {
     return gitHub;

@@ -32,13 +32,14 @@ class AppState {
   });
 
   factory AppState.initial() => AppState(
-      isLoading: false,
-      route: [Routes.home],
-      gitHub: [],
-      commits: [],
-      isNextPageAvailable: false,
-      dbGitHub: [],
-      isInBox: false);
+        isLoading: false,
+        route: [Routes.home],
+        gitHub: [],
+        commits: [],
+        isNextPageAvailable: false,
+        dbGitHub: [],
+        isInBox: false,
+      );
   factory AppState.loaded() => AppState(
         isLoading: true,
       );

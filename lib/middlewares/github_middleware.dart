@@ -19,7 +19,7 @@ List<Contributors> contributors = new List<Contributors>();
 void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is GitHubOnInitActions) {
     store.dispatch(GitHubOnLoadAction());
-    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.updateDate,
+    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.isUpdateData,
             since: action.since)
         .then((itemsPage) {
       store.dispatch(GitHubLoadedAction(itemsPage));
@@ -31,12 +31,12 @@ void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
+Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool isUpdateData,
     {int since = 1}) async {
   List<GitHub> gitHub = new List<GitHub>();
 
   // Call at data update (Pull-to-refresh)
-  if (updateDate) {
+  if (isUpdateData) {
     // Get a list of all repositories
     Response repositoriesResponse = await getRepositories();
     if (repositoriesResponse.statusCode == 200) {

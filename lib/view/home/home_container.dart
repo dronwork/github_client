@@ -17,10 +17,10 @@ class HomeContainer extends StatelessWidget {
       onInit: (store) {
         store.dispatch(
           GitHubOnInitActions(
-            init: true,
+            isInitData: true,
             pageNumber: 0,
             itemsPerPage: AppState.itemsPerPage,
-            updateDate: true,
+            isUpdateData: true,
           ),
         );
       },
@@ -88,7 +88,7 @@ class _ViewModel {
         GitHubOnInitActions(
           pageNumber: store.state.gitHub.length ~/ AppState.itemsPerPage,
           itemsPerPage: AppState.itemsPerPage,
-          updateDate: false,
+          isUpdateData: false,
         ),
       );
     }
@@ -97,7 +97,10 @@ class _ViewModel {
   void onRefresh() {
     store.dispatch(
       GitHubOnInitActions(
-          pageNumber: 0, itemsPerPage: AppState.itemsPerPage, updateDate: true),
+        pageNumber: 0,
+        itemsPerPage: AppState.itemsPerPage,
+        isUpdateData: true,
+      ),
     );
   }
 

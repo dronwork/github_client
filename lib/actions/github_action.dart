@@ -5,16 +5,16 @@ import '../models/github.dart';
 class GitHubOnInitActions {
   final int pageNumber;
   final int itemsPerPage;
-  final bool updateDate;
-  final bool init;
+  final bool isUpdateData;
+  final bool isInitData;
   final int since;
 
   GitHubOnInitActions({
     @required this.pageNumber,
     @required this.itemsPerPage,
-    @required this.updateDate,
-    this.init = false,
-    this.since,
+    @required this.isUpdateData,
+    this.isInitData = false,
+    this.since = 0,
   });
 }
 

@@ -12,7 +12,7 @@ void dbMiddleware(Store<AppState> store, action, NextDispatcher next) async {
   if (action is DbOnInitActions) {
     store.dispatch(DbOnLoadAction());
     store.dispatch(DbLoadedAction<GitHub>(gitHubBox.values.toList()));
-    store.dispatch(DbIsInBoxAction(_listsEqual(store)));
+    // store.dispatch(DbIsInBoxAction(_listsEqual(store)));
   }
 
   if (action is DbOnAddAction<GitHub>) {
