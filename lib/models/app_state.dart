@@ -14,7 +14,6 @@ class AppState {
   // GitHub data
   static const int itemsPerPage = 5;
   final List<GitHub> gitHub;
-  final bool isDataLoading;
   final bool isNextPageAvailable;
   final List<Commits> commits;
   // Hive
@@ -27,7 +26,6 @@ class AppState {
     this.route,
     this.gitHub,
     this.commits,
-    this.isDataLoading,
     this.isNextPageAvailable,
     this.dbGitHub,
     this.isInBox,
@@ -38,7 +36,6 @@ class AppState {
       route: [Routes.home],
       gitHub: [],
       commits: [],
-      isDataLoading: false,
       isNextPageAvailable: false,
       dbGitHub: [],
       isInBox: false);

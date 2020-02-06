@@ -11,7 +11,6 @@ AppState appStateReducer(AppState state, action) => AppState(
       error: errorReducer(state.error, action),
       route: routesReducer(state.route, action),
       gitHub: gitHubReducer(state.gitHub, action),
-      isDataLoading: isDataLoadingReducer(state.isDataLoading, action),
       isNextPageAvailable:
           isNextPageAvailableReducer(state.isNextPageAvailable, action),
       commits: commitsReducer(state.commits, action),

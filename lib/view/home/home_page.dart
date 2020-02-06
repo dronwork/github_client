@@ -10,7 +10,6 @@ class HomePage extends StatefulWidget {
   final bool isLoading;
   final bool noError;
   final Function(String, {Object arguments}) navigate;
-  final bool isDataLoading;
   final bool isNextPageAvailable;
   final List<GitHub> gitHub;
   final Function refresh;
@@ -24,7 +23,6 @@ class HomePage extends StatefulWidget {
     @required this.isLoading,
     @required this.noError,
     @required this.navigate,
-    @required this.isDataLoading,
     @required this.isNextPageAvailable,
     @required this.gitHub,
     @required this.refresh,
@@ -79,8 +77,7 @@ class _HomePageState extends State<HomePage> {
                 );
               } else if (widget.gitHub.length != 0) {
                 return Center(child: CircularProgressIndicator());
-              } else if (widget.gitHub.length == 0 &&
-                  !(widget.isDataLoading || widget.isLoading)) {
+              } else if (widget.gitHub.length == 0 && !widget.isLoading) {
                 return Center(child: Text("Null data"));
               }
             },
@@ -94,7 +91,7 @@ class _HomePageState extends State<HomePage> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll - currentScroll <= _scrollThresholdInPixels &&
-        !widget.isDataLoading) {
+        !widget.isLoading) {
       _preloader.run(() => widget.loadNextPage());
     }
   }

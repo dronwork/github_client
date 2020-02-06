@@ -23,10 +23,9 @@ class HomeContainer extends StatelessWidget {
       rebuildOnChange: true,
       builder: (context, viewModel) {
         return HomePage(
-          isLoading: viewModel.store.state.isLoading,
+          isLoading: viewModel.isLoading,
           noError: viewModel.error,
           navigate: viewModel.navigate,
-          isDataLoading: viewModel.isDataLoading,
           isNextPageAvailable: viewModel.isNextPageAvailable,
           gitHub: viewModel.gitHub,
           refresh: viewModel.onRefresh,
@@ -47,7 +46,7 @@ class _ViewModel {
   final Function(String, {Object arguments}) navigate;
 
   final List<GitHub> gitHub;
-  final bool isDataLoading;
+  final bool isLoading;
   final bool isNextPageAvailable;
 
   _ViewModel({
@@ -56,7 +55,7 @@ class _ViewModel {
     @required this.route,
     @required this.navigate,
     @required this.gitHub,
-    @required this.isDataLoading,
+    @required this.isLoading,
     @required this.isNextPageAvailable,
   });
 
@@ -69,13 +68,13 @@ class _ViewModel {
         NavigatePushAction(routeName, arguments: arguments),
       ),
       gitHub: store.state.gitHub,
-      isDataLoading: store.state.isDataLoading,
+      isLoading: store.state.isLoading,
       isNextPageAvailable: store.state.isNextPageAvailable,
     );
   }
 
   void onLoadNextPage() {
-    if (!isDataLoading && isNextPageAvailable) {
+    if (!isLoading && isNextPageAvailable) {
       store.dispatch(
         GitHubOnInitActions(
             pageNumber: gitHub.length ~/ AppState.itemsPerPage,
