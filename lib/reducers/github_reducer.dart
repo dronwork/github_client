@@ -11,7 +11,9 @@ final Reducer<List<GitHub>> gitHubReducer = combineReducers([
 List<GitHub> _githubLoaded(List<GitHub> gitHub, action) {
   if (action is GitHubLoadedAction) {
     return List.from(gitHub)..addAll(action.gitHub);
-  } else if (action is GitHubOnInitActions && action.pageNumber == 0) {
+  } else if (action is GitHubOnInitActions &&
+      action.updateDate &&
+      !action.init) {
     return List<GitHub>();
   } else {
     return gitHub;

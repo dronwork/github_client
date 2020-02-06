@@ -15,10 +15,14 @@ class HomeContainer extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromStore,
       onInit: (store) {
-        store.dispatch(GitHubOnInitActions(
+        store.dispatch(
+          GitHubOnInitActions(
+            init: true,
             pageNumber: 0,
             itemsPerPage: AppState.itemsPerPage,
-            updateDate: true));
+            updateDate: true,
+          ),
+        );
       },
       rebuildOnChange: true,
       builder: (context, viewModel) {
@@ -82,9 +86,10 @@ class _ViewModel {
     if (!isLoading && isNextPageAvailable) {
       store.dispatch(
         GitHubOnInitActions(
-            pageNumber: store.state.gitHub.length ~/ AppState.itemsPerPage,
-            itemsPerPage: AppState.itemsPerPage,
-            updateDate: false),
+          pageNumber: store.state.gitHub.length ~/ AppState.itemsPerPage,
+          itemsPerPage: AppState.itemsPerPage,
+          updateDate: false,
+        ),
       );
     }
   }

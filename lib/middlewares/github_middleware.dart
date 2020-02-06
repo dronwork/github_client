@@ -83,23 +83,19 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
       }
 
       // Adding all information to the GitHub model
-      if (repositories[i].fullName.isNotEmpty &&
-          repository[i].name.isNotEmpty) {
-        gitHub.add(GitHub(
-          id: repositories[i].id,
-          fullName: repositories[i].fullName,
-          name: repository[i].name,
-          description: repository[i].description,
-          language: repository[i].language,
-          forksCount: repository[i].forksCount,
-          stargazersCount: repository[i].stargazersCount,
-          login: repository[i].owner.login,
-          avatarUrl: repository[i].owner.avatarUrl,
-          commits: contributors[i].contributions,
-        ));
-      } else {
-        throw Exception('Error add data to GitHub model.');
-      }
+      // TODO BUG (element duplication): id & fullName new, all else old. WTF!!!
+      gitHub.add(GitHub(
+        id: repositories[i].id,
+        fullName: repositories[i].fullName,
+        name: repository[i].name,
+        description: repository[i].description,
+        language: repository[i].language,
+        forksCount: repository[i].forksCount,
+        stargazersCount: repository[i].stargazersCount,
+        login: repository[i].owner.login,
+        avatarUrl: repository[i].owner.avatarUrl,
+        commits: contributors[i].contributions,
+      ));
     }
   }
 
