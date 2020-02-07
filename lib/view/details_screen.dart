@@ -30,16 +30,26 @@ class DetailsScreen extends StatelessWidget {
               return <Widget>[
                 SliverAppBar(
                   expandedHeight: 280,
-                  floating: false,
-                  pinned: true,
-                  backgroundColor: Colors.grey,
+                  floating: true,
+                  pinned: false,
+                  // backgroundColor: Colors.grey,
                   flexibleSpace: Stack(
                     alignment: AlignmentDirectional.bottomCenter,
                     children: <Widget>[
                       FlexibleSpaceBar(
                         centerTitle: true,
-                        title: Text(
-                          "${args.login} / ${args.name}",
+                        titlePadding: EdgeInsets.symmetric(vertical: 6),
+                        title: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Text(
+                              "${args.login}",
+                            ),
+                            Text(
+                              "${args.name}",
+                            ),
+                          ],
                         ),
                         background: Hero(
                           tag: args.id,
@@ -63,27 +73,30 @@ class DetailsScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: viewModel.state.commits.length,
                 itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 5,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                              "${viewModel.state.commits[index].commit.message}"),
-                        ),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          child: Text(
-                            "${viewModel.state.commits[index].commit.author.name} (${viewModel.state.commits[index].commit.author.email}) on ${viewModel.state.commits[index].commit.author.dateAtFormatted}",
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.grey[700],
+                  return Container(
+                    padding: EdgeInsets.all(5),
+                    child: Card(
+                      elevation: 5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                                "${viewModel.state.commits[index].commit.message}"),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              "${viewModel.state.commits[index].commit.author.name} (${viewModel.state.commits[index].commit.author.email}) on ${viewModel.state.commits[index].commit.author.dateAtFormatted}",
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey[700],
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   );
                 },

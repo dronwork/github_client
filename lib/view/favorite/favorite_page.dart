@@ -34,7 +34,7 @@ class _HomePageState extends State<FavoritePage> {
       child: RefreshIndicator(
         onRefresh: _onRefresh,
         child: LoadingWidget(
-          isLoading: widget.isLoading && widget.dbGitHub.length == 0,
+          isLoading: (widget.isLoading && widget.dbGitHub.length == 0),
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.dbGitHub.length,
