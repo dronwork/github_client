@@ -7,7 +7,6 @@ import '../../view/main_screen.dart';
 
 class FavoritePage extends StatefulWidget {
   final bool isLoading;
-  final bool noError;
   final Function(String, {Object arguments}) navigate;
   final List<GitHub> dbGitHub;
   final Function refresh;
@@ -18,7 +17,6 @@ class FavoritePage extends StatefulWidget {
   const FavoritePage({
     Key key,
     @required this.isLoading,
-    @required this.noError,
     @required this.navigate,
     @required this.dbGitHub,
     @required this.refresh,

@@ -16,7 +16,6 @@ class FavoriteContainer extends StatelessWidget {
       builder: (context, viewModel) {
         return FavoritePage(
           isLoading: viewModel.store.state.isLoading,
-          noError: viewModel.error,
           navigate: viewModel.navigate,
           dbGitHub: viewModel.dbGitHub,
           refresh: viewModel.onRefresh,
@@ -31,14 +30,12 @@ class FavoriteContainer extends StatelessWidget {
 
 class _ViewModel {
   final Store<AppState> store;
-  final bool error;
   final List<String> route;
   final Function(String, {Object arguments}) navigate;
   final List<GitHub> dbGitHub;
 
   _ViewModel({
     @required this.store,
-    @required this.error,
     @required this.route,
     @required this.navigate,
     @required this.dbGitHub,
@@ -47,7 +44,6 @@ class _ViewModel {
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       store: store,
-      error: store.state.error == null,
       route: store.state.route,
       navigate: (routeName, {arguments}) =>
           store.dispatch(NavigatePushAction(routeName, arguments: arguments)),
