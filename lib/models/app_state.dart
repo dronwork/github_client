@@ -14,8 +14,8 @@ class AppState {
   // GitHub data
   static const int itemsPerPage = 5;
   final List<GitHub> gitHub;
-  final bool isNextPageAvailable;
   final List<Commits> commits;
+  final bool isNextPageAvailable;
   // Hive
   final List<GitHub> dbGitHub;
 

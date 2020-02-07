@@ -2,7 +2,7 @@ import 'package:redux/redux.dart';
 
 import '../actions/routes_action.dart';
 
-final navigatorsReducer = combineReducers<List<String>>([
+final navigatorReducer = combineReducers<List<String>>([
   TypedReducer<List<String>, NavigateReplaceAction>(_navigateReplace),
   TypedReducer<List<String>, NavigatePushAction>(_navigatePush),
   TypedReducer<List<String>, NavigatePopAction>(_navigatePop),
