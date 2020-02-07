@@ -4,7 +4,7 @@ import '../actions/routes_action.dart';
 import '../models/app_state.dart';
 import '../utils/consts.dart';
 
-void routesMiddleware(Store<AppState> store, action, NextDispatcher next) {
+void navigatorsMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is NavigateReplaceAction) {
     final String routeName = action.routeName;
     final Object arguments = action?.arguments;
