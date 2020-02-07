@@ -6,9 +6,7 @@ import '../../actions/error_action.dart';
 import '../../models/app_state.dart';
 
 class ErrorNotifierWidget extends StatelessWidget {
-  ErrorNotifierWidget({
-    @required this.child,
-  });
+  ErrorNotifierWidget({@required this.child});
 
   final Widget child;
 

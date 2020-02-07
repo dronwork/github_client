@@ -7,31 +7,6 @@ import '../../models/app_state.dart';
 import '../../models/routes.dart';
 
 class BottomNavBar extends StatelessWidget {
-  Widget _addPadding(Widget child) => Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: child,
-      );
-
-  Widget _getMenuItem(BuildContext context,
-      {Icon icon, String routeName, @required _ViewModel viewModel}) {
-    if (!viewModel.route.contains(routeName)) {
-      return _addPadding(
-        IconButton(
-          icon: icon,
-          onPressed: () => viewModel.navigate(routeName),
-        ),
-      );
-    } else {
-      return _addPadding(
-        IconButton(
-          icon: icon,
-          onPressed: () => viewModel.navigate(routeName),
-          color: Theme.of(context).accentColor.withOpacity(0.7),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
@@ -59,6 +34,31 @@ class BottomNavBar extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _addPadding(Widget child) => Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4),
+        child: child,
+      );
+
+  Widget _getMenuItem(BuildContext context,
+      {Icon icon, String routeName, @required _ViewModel viewModel}) {
+    if (!viewModel.route.contains(routeName)) {
+      return _addPadding(
+        IconButton(
+          icon: icon,
+          onPressed: () => viewModel.navigate(routeName),
+        ),
+      );
+    } else {
+      return _addPadding(
+        IconButton(
+          icon: icon,
+          onPressed: () => viewModel.navigate(routeName),
+          color: Theme.of(context).accentColor.withOpacity(0.7),
+        ),
+      );
+    }
   }
 }
 
