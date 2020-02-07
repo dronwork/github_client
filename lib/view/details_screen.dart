@@ -16,10 +16,10 @@ class DetailsScreen extends StatelessWidget {
 
     return StoreConnector<AppState, Store<AppState>>(
       onInit: (store) {
-        store.dispatch(CommitsOnInitActions(args.fullName));
+        store.dispatch(CommitsOnInitAction(args.fullName));
       },
       onDispose: (store) {
-        store.dispatch(CommitsOnDisposeActions());
+        store.dispatch(CommitsOnDisposeAction());
       },
       converter: (Store<AppState> store) => store,
       builder: (context, viewModel) => Scaffold(

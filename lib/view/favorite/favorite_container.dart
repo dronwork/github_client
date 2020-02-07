@@ -51,7 +51,7 @@ class _ViewModel {
   }
 
   void onRefresh() {
-    store.dispatch(DbOnInitActions());
+    store.dispatch(DbOnInitAction());
   }
 
   void onAddToDb(GitHub gitHub) {

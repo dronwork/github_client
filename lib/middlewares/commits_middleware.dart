@@ -12,7 +12,7 @@ import '../models/commits.dart';
 void commitsMiddleware(
     Store<AppState> store, action, NextDispatcher next) async {
   List<Commits> commits = new List<Commits>();
-  if (action is CommitsOnInitActions) {
+  if (action is CommitsOnInitAction) {
     if (store.state.commits.isEmpty) {
       store.dispatch(CommitsOnLoadAction());
       Response commitsResponse = await getCommits(action.fullName);
@@ -31,7 +31,7 @@ void commitsMiddleware(
     }
   }
 
-  if (action is CommitsOnDisposeActions) {
+  if (action is CommitsOnDisposeAction) {
     store.dispatch(CommitsLoadedAction([]));
   }
 

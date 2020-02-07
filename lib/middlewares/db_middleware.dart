@@ -9,7 +9,7 @@ import '../utils/consts.dart';
 void dbMiddleware(Store<AppState> store, action, NextDispatcher next) async {
   Box<GitHub> gitHubBox = await Hive.openBox<GitHub>(dbName);
 
-  if (action is DbOnInitActions) {
+  if (action is DbOnInitAction) {
     store.dispatch(DbOnLoadAction());
     store.dispatch(DbLoadedAction<GitHub>(gitHubBox.values.toList()));
   }

@@ -1,4 +1,4 @@
-class DbOnInitActions {}
+class DbOnInitAction {}
 
 class DbOnLoadAction {}
 

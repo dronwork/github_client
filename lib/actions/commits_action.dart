@@ -1,9 +1,9 @@
 import '../models/commits.dart';
 
-class CommitsOnInitActions {
+class CommitsOnInitAction {
   final String fullName;
 
-  CommitsOnInitActions(this.fullName);
+  CommitsOnInitAction(this.fullName);
 }
 
 class CommitsOnLoadAction {}
@@ -13,4 +13,4 @@ class CommitsLoadedAction {
   CommitsLoadedAction(this.commits);
 }
 
-class CommitsOnDisposeActions {}
+class CommitsOnDisposeAction {}

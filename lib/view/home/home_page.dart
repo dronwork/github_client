@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
       child: RefreshIndicator(
         onRefresh: _onRefresh,
         child: LoadingWidget(
-          isLoading: widget.isLoading,
+          isLoading: widget.isLoading && widget.gitHub.length == 0,
           child: ListView.builder(
             controller: _scrollController,
             physics: AlwaysScrollableScrollPhysics(),

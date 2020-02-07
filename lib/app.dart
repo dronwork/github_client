@@ -24,7 +24,7 @@ class App extends StatelessWidget {
             isUpdateData: true,
           ),
         );
-        store.dispatch(DbOnInitActions());
+        store.dispatch(DbOnInitAction());
       },
       converter: (Store<AppState> store) => store,
       builder: (context, viewModel) => MaterialApp(
