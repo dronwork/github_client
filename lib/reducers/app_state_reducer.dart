@@ -15,5 +15,4 @@ AppState appStateReducer(AppState state, action) => AppState(
           isNextPageAvailableReducer(state.isNextPageAvailable, action),
       commits: commitsReducer(state.commits, action),
       dbGitHub: dbReducer(state.dbGitHub, action),
-      isInBox: dbIsBoxReducer(state.isInBox, action),
     );

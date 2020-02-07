@@ -18,7 +18,6 @@ class AppState {
   final List<Commits> commits;
   // Hive
   final List<GitHub> dbGitHub;
-  final bool isInBox;
 
   AppState({
     this.isLoading = false,
@@ -28,7 +27,6 @@ class AppState {
     this.commits,
     this.isNextPageAvailable,
     this.dbGitHub,
-    this.isInBox,
   });
 
   factory AppState.initial() => AppState(
@@ -38,7 +36,6 @@ class AppState {
         commits: [],
         isNextPageAvailable: false,
         dbGitHub: [],
-        isInBox: false,
       );
   factory AppState.loaded() => AppState(
         isLoading: true,

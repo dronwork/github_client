@@ -24,7 +24,6 @@ class HomeContainer extends StatelessWidget {
           loadNextPage: viewModel.onLoadNextPage,
           addToDb: viewModel.onAddToDb,
           deleteFromDb: viewModel.onDeleteFromDb,
-          isInBox: viewModel.store.state.isInBox,
         );
       },
     );
@@ -41,8 +40,6 @@ class _ViewModel {
   final List<GitHub> gitHub;
   final bool isNextPageAvailable;
 
-  final bool isInBox;
-
   _ViewModel({
     @required this.store,
     @required this.route,
@@ -50,7 +47,6 @@ class _ViewModel {
     @required this.gitHub,
     @required this.isLoading,
     @required this.isNextPageAvailable,
-    @required this.isInBox,
   });
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -63,7 +59,6 @@ class _ViewModel {
       gitHub: store.state.gitHub,
       isLoading: store.state.isLoading,
       isNextPageAvailable: store.state.isNextPageAvailable,
-      isInBox: true,
     );
   }
 

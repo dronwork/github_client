@@ -12,7 +12,6 @@ class GitHubItemWidget extends StatelessWidget {
   final Function(String, {Object arguments}) onTap;
   final Function addToDb;
   final Function deleteFromDb;
-  final bool isInBox;
 
   const GitHubItemWidget({
     Key key,
@@ -20,7 +19,6 @@ class GitHubItemWidget extends StatelessWidget {
     @required this.onTap,
     @required this.addToDb,
     @required this.deleteFromDb,
-    @required this.isInBox,
   }) : super(key: key);
 
   @override
@@ -30,7 +28,7 @@ class GitHubItemWidget extends StatelessWidget {
       child: Slidable(
         actionPane: SlidableDrawerActionPane(),
         secondaryActions: <Widget>[
-          (isInBox || gitHub.isInBox)
+          (gitHub.isInBox)
               ? IconSlideAction(
                   caption: 'Delete',
                   color: Colors.red,

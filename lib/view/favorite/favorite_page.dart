@@ -12,7 +12,6 @@ class FavoritePage extends StatefulWidget {
   final Function refresh;
   final Function addToDb;
   final Function deleteFromDb;
-  final bool isInBox;
 
   const FavoritePage({
     Key key,
@@ -22,7 +21,6 @@ class FavoritePage extends StatefulWidget {
     @required this.refresh,
     @required this.addToDb,
     @required this.deleteFromDb,
-    @required this.isInBox,
   }) : super(key: key);
 
   @override
@@ -46,7 +44,6 @@ class _HomePageState extends State<FavoritePage> {
                 gitHub: widget.dbGitHub[index],
                 addToDb: widget.addToDb,
                 deleteFromDb: widget.deleteFromDb,
-                isInBox: widget.isInBox,
               );
             },
           ),

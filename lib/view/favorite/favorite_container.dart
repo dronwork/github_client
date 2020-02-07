@@ -21,7 +21,6 @@ class FavoriteContainer extends StatelessWidget {
           refresh: viewModel.onRefresh,
           addToDb: viewModel.onAddToDb,
           deleteFromDb: viewModel.onDeleteFromDb,
-          isInBox: viewModel.store.state.isInBox,
         );
       },
     );

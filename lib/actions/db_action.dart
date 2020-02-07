@@ -19,9 +19,3 @@ class DbLoadedAction<Model> {
 
   DbLoadedAction(this.model);
 }
-
-class DbIsInBoxAction {
-  final bool isInBox;
-
-  DbIsInBoxAction(this.isInBox);
-}

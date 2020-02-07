@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
   final Function loadNextPage;
   final Function addToDb;
   final Function deleteFromDb;
-  final bool isInBox;
 
   const HomePage({
     Key key,
@@ -27,7 +26,6 @@ class HomePage extends StatefulWidget {
     @required this.loadNextPage,
     @required this.addToDb,
     @required this.deleteFromDb,
-    @required this.isInBox,
   }) : super(key: key);
 
   @override
@@ -71,7 +69,6 @@ class _HomePageState extends State<HomePage> {
                   gitHub: widget.gitHub[index],
                   addToDb: widget.addToDb,
                   deleteFromDb: widget.deleteFromDb,
-                  isInBox: widget.isInBox,
                 );
               } else if (widget.gitHub.length != 0) {
                 return Center(child: CircularProgressIndicator());
