@@ -12,14 +12,14 @@ import '../models/repository.dart';
 import '../models/contributors.dart';
 import '../models/github.dart';
 
-List<Repositories> repositories = new List<Repositories>();
-List<Repository> repository = new List<Repository>();
-List<Contributors> contributors = new List<Contributors>();
+List<Repositories> _repositories = new List<Repositories>();
+List<Repository> _repository = new List<Repository>();
+List<Contributors> _contributors = new List<Contributors>();
 
 void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   if (action is GitHubOnInitAction) {
     store.dispatch(GitHubOnLoadAction());
-    _loadGitHubData(action.pageNumber, action.itemsPerPage, action.isUpdateData,
+    _loadGitHub(action.pageNumber, action.itemsPerPage, action.isUpdateData,
             since: action.since)
         .then((itemsPage) {
       store.dispatch(GitHubLoadedAction(itemsPage));
@@ -31,17 +31,19 @@ void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
   next(action);
 }
 
-Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
+Future<List<GitHub>> _loadGitHub(
+    int pageNumber, int itemsPerPage, bool isUpdateData,
     {int since = 0}) async {
   List<GitHub> gitHub = new List<GitHub>();
 
   // Call at data update (Pull-to-refresh)
-  if (updateDate) {
+  if (isUpdateData) {
     // Get a list of all repositories
     Response repositoriesResponse = await getRepositories();
     if (repositoriesResponse.statusCode == 200) {
       List list = convert.jsonDecode(repositoriesResponse.body);
-      repositories = list.map((model) => Repositories.fromJson(model)).toList();
+      _repositories =
+          list.map((model) => Repositories.fromJson(model)).toList();
     } else {
       throw Exception(
           'Error getting repositories data, http code: ${repositoriesResponse.statusCode}.');
@@ -49,18 +51,18 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
   }
 
   // Ranks for the loop
-  if (page != 0) {
-    page = page * perPage;
-    perPage = perPage + page;
+  if (pageNumber != 0) {
+    pageNumber = pageNumber * itemsPerPage;
+    itemsPerPage = itemsPerPage + pageNumber;
   }
 
-  for (int i = page; i < perPage; i++) {
-    if (i < repositories.length) {
+  for (int i = pageNumber; i < itemsPerPage; i++) {
+    if (i < _repositories.length) {
       // Get information about the repository.
       Response repositoryResponse =
-          await getRepository(repositories[i].fullName);
+          await getRepository(_repositories[i].fullName);
       if (repositoryResponse.statusCode == 200) {
-        repository.add(
+        _repository.add(
             Repository.fromJson(convert.jsonDecode(repositoryResponse.body)));
       } else {
         throw Exception(
@@ -69,14 +71,14 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
 
       // Get the number of commits
       Response contributorsResponse =
-          await getContributors(repositories[i].fullName);
+          await getContributors(_repositories[i].fullName);
       if (contributorsResponse.statusCode == 200) {
         int commits = 0;
         List list = convert.jsonDecode(contributorsResponse.body);
 
         list.forEach((v) => commits += Contributors.fromJson(v).contributions);
 
-        contributors.add(Contributors(contributions: commits));
+        _contributors.add(Contributors(contributions: commits));
       } else {
         throw Exception(
             'Error getting contributors data, http code: ${contributorsResponse.statusCode}.');
@@ -84,16 +86,16 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
 
       // Adding all information to the GitHub model
       gitHub.add(GitHub(
-        id: repositories[i].id,
-        fullName: repositories[i].fullName,
-        name: repository[i].name,
-        description: repository[i].description,
-        language: repository[i].language,
-        forksCount: repository[i].forksCount,
-        stargazersCount: repository[i].stargazersCount,
-        login: repository[i].owner.login,
-        avatarUrl: repository[i].owner.avatarUrl,
-        commits: contributors[i].contributions,
+        id: _repositories[i].id,
+        fullName: _repositories[i].fullName,
+        name: _repository[i].name,
+        description: _repository[i].description,
+        language: _repository[i].language,
+        forksCount: _repository[i].forksCount,
+        stargazersCount: _repository[i].stargazersCount,
+        login: _repository[i].owner.login,
+        avatarUrl: _repository[i].owner.avatarUrl,
+        commits: _contributors[i].contributions,
       ));
     }
   }
