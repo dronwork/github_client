@@ -13,9 +13,6 @@ class FavoriteContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromStore,
-      onInit: (store) {
-        store.dispatch(DbOnInitActions());
-      },
       builder: (context, viewModel) {
         return FavoritePage(
           isLoading: viewModel.store.state.isLoading,

@@ -32,7 +32,7 @@ void githubMiddleware(Store<AppState> store, action, NextDispatcher next) {
 }
 
 Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
-    {int since = 1}) async {
+    {int since = 0}) async {
   List<GitHub> gitHub = new List<GitHub>();
 
   // Call at data update (Pull-to-refresh)
@@ -83,7 +83,6 @@ Future<List<GitHub>> _loadGitHubData(int page, int perPage, bool updateDate,
       }
 
       // Adding all information to the GitHub model
-      // TODO BUG (element duplication): id & fullName new, all else old. WTF!!!
       gitHub.add(GitHub(
         id: repositories[i].id,
         fullName: repositories[i].fullName,

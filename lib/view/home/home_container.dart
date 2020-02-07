@@ -14,16 +14,6 @@ class HomeContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       converter: _ViewModel.fromStore,
-      onInit: (store) {
-        store.dispatch(
-          GitHubOnInitAction(
-            isInitData: true,
-            pageNumber: 0,
-            itemsPerPage: AppState.itemsPerPage,
-            isUpdateData: true,
-          ),
-        );
-      },
       builder: (context, viewModel) {
         return HomePage(
           isLoading: viewModel.isLoading,
