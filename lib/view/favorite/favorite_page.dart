@@ -34,17 +34,21 @@ class _HomePageState extends State<FavoritePage> {
       child: RefreshIndicator(
         onRefresh: _onRefresh,
         child: LoadingWidget(
-          isLoading: widget.isLoading,
+          isLoading: widget.isLoading && widget.dbGitHub.length == 0,
           child: ListView.builder(
             shrinkWrap: true,
             itemCount: widget.dbGitHub.length,
             itemBuilder: (context, index) {
-              return GitHubItemWidget(
-                onTap: widget.navigate,
-                gitHub: widget.dbGitHub[index],
-                addToDb: widget.addToDb,
-                deleteFromDb: widget.deleteFromDb,
-              );
+              if (widget.dbGitHub.length != 0) {
+                return GitHubItemWidget(
+                  onTap: widget.navigate,
+                  gitHub: widget.dbGitHub[index],
+                  addToDb: widget.addToDb,
+                  deleteFromDb: widget.deleteFromDb,
+                );
+              } else {
+                return Center(child: Text("Null data"));
+              }
             },
           ),
         ),
